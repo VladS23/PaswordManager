@@ -26,8 +26,10 @@ namespace PaswordManager
         public TextBlock pass1Hint = new TextBlock();
         public TextBox pass2 = new TextBox();
         public TextBlock pass2Hint = new TextBlock();
-        public Button createBtn= new Button();
-        public TextBlock createBtnText = new TextBlock();
+        public Button SightUpBtn= new Button();
+        public TextBlock SightUpBtnText = new TextBlock();
+        public Button LogInBtn = new Button();
+        public TextBlock LogInBtnText = new TextBlock();
         public TextBlock errorText = new TextBlock();
         string passwd1;
         string passwd2;
@@ -40,7 +42,42 @@ namespace PaswordManager
             {
                 BuildSighUpPage();
             }
-            createBtn.Click += CreateNewPassFile;
+            else
+            {
+                BuildLogInPage();
+            }
+            SightUpBtn.Click += CreateNewPassFile;
+        }
+
+        private void BuildLogInPage()
+        {
+            logo.Text = "Password Manager";
+            MainStackPanel.Children.Add(logo);
+            logo.TextAlignment = TextAlignment.Center;
+            logo.FontWeight = FontWeights.Bold;
+            logo.FontSize = 50;
+            logo.FontFamily = new FontFamily("Cooper Black");
+            logo.Foreground = Brushes.RoyalBlue;
+            MainStackPanel.Children.Add(pass1);
+            pass1.Margin = new Thickness(0, 30, 0, 0);
+            pass1.Width = 150;
+            pass1Hint.Text = "Введите пароль";
+            MainStackPanel.Children.Add(pass1Hint);
+            pass1Hint.TextAlignment = TextAlignment.Center;
+            pass1Hint.FontSize = 8;
+            pass1Hint.Foreground = Brushes.LightGray;
+            MainStackPanel.Children.Add(LogInBtn);
+            LogInBtn.Width = 150;
+            LogInBtn.Height = 40;
+            LogInBtn.Margin = new Thickness(0, 30, 0, 0);
+            LogInBtn.Background = Brushes.RoyalBlue;
+            LogInBtn.BorderBrush = null;
+            LogInBtn.Foreground = Brushes.White;
+            LogInBtn.Content = LogInBtnText;
+            LogInBtnText.Text = "Войти";
+            LogInBtnText.FontSize = 15;
+            LogInBtnText.FontWeight = FontWeights.Bold;
+            MainStackPanel.Children.Add(errorText);
         }
 
         private void CreateNewPassFile(object sender, RoutedEventArgs e)
@@ -51,11 +88,19 @@ namespace PaswordManager
             {
                 if (passwd1!= null && passwd1.Length >= 8)
                 {
-                    File.Create(Directory.GetCurrentDirectory() + @"/paswd.enc");
-                    password = passwd1;
-                    Passwords paswordsWindow = new Passwords();
-                    paswordsWindow.Show();
-                    this.Close();
+                    if (!passwd1.Contains(" "))
+                    {
+                        File.Create(Directory.GetCurrentDirectory() + @"/paswd.enc");
+                        password = passwd1;
+                        Passwords paswordsWindow = new Passwords();
+                        paswordsWindow.Show();
+                        this.Close();
+                    }
+                    {
+                        errorText.Text = "Пароль не должен содержать пробелы";
+                        errorText.Foreground = Brushes.Red;
+                        errorText.TextAlignment = TextAlignment.Center;
+                    }
                 }
                 else
                 {
@@ -97,18 +142,17 @@ namespace PaswordManager
             pass2Hint.TextAlignment = TextAlignment.Center;
             pass2Hint.FontSize = 8;
             pass2Hint.Foreground = Brushes.LightGray;
-            MainStackPanel.Children.Add(createBtn);
-            createBtn.Width = 150;
-            createBtn.Height = 40;
-            createBtn.Margin = new Thickness(0, 30, 0, 0);
-            createBtn.Background = Brushes.RoyalBlue;
-            createBtn.BorderBrush = null;
-            createBtn.Content = "Создать!";
-            createBtn.Foreground = Brushes.White;
-            createBtn.Content = createBtnText;
-            createBtnText.Text = "Создать";
-            createBtnText.FontSize = 15;
-            createBtnText.FontWeight = FontWeights.Bold;
+            MainStackPanel.Children.Add(SightUpBtn);
+            SightUpBtn.Width = 150;
+            SightUpBtn.Height = 40;
+            SightUpBtn.Margin = new Thickness(0, 30, 0, 0);
+            SightUpBtn.Background = Brushes.RoyalBlue;
+            SightUpBtn.BorderBrush = null;
+            SightUpBtn.Foreground = Brushes.White;
+            SightUpBtn.Content = SightUpBtnText;
+            SightUpBtnText.Text = "Создать";
+            SightUpBtnText.FontSize = 15;
+            SightUpBtnText.FontWeight = FontWeights.Bold;
             MainStackPanel.Children.Add(errorText);
         }
     }
