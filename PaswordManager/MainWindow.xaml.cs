@@ -21,25 +21,58 @@ namespace PaswordManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        public TextBlock logo = new TextBlock();
+        public TextBox pass1 = new TextBox();
+        public TextBlock pass1Hint = new TextBlock();
+        public TextBox pass2 = new TextBox();
+        public TextBlock pass2Hint = new TextBlock();
+        public Button createBtn= new Button();
+        public TextBlock createBtnText = new TextBlock();
         public MainWindow()
         {
             InitializeComponent();
             if (!File.Exists(Directory.GetCurrentDirectory() + @"/paswd.enc"))
             {
-                TextBlock logo = new TextBlock();
-                logo.Text = "Password Manager";
-                MainStackPanel.Children.Add(logo);
-                logo.TextAlignment = TextAlignment.Center;
-                logo.FontWeight = FontWeights.Bold;
-                logo.FontSize = 25;
-                logo.FontFamily = new FontFamily("Cooper Black");
-                logo.Foreground = Brushes.RoyalBlue;
-                TextBlock createFile=new TextBlock();
-                createFile.Text = "Не обнаружены файлы с паролями.\n Создание нового файла";
-                MainStackPanel.Children.Add(createFile);
-                createFile.TextAlignment = TextAlignment.Center;
-                createFile.Margin=new Thickness(0, 10,0,0);
+                BuildSighUpPage();
             }
+        }
+        void BuildSighUpPage()
+        {
+            logo.Text = "Password Manager";
+            MainStackPanel.Children.Add(logo);
+            logo.TextAlignment = TextAlignment.Center;
+            logo.FontWeight = FontWeights.Bold;
+            logo.FontSize = 50;
+            logo.FontFamily = new FontFamily("Cooper Black");
+            logo.Foreground = Brushes.RoyalBlue;
+            MainStackPanel.Children.Add(pass1);
+            pass1.Margin = new Thickness(0, 30, 0, 0);
+            pass1.Width = 150;
+            pass1Hint.Text = "Придумайте пароль для доступа к паролям";
+            MainStackPanel.Children.Add(pass1Hint);
+            pass1Hint.TextAlignment = TextAlignment.Center;
+            pass1Hint.FontSize = 8;
+            pass1Hint.Foreground = Brushes.LightGray;
+            MainStackPanel.Children.Add(pass2);
+            pass2.Margin = new Thickness(0, 10, 0, 0);
+            pass2.Width = 150;
+            pass2Hint.Text = "Повторите его";
+            MainStackPanel.Children.Add(pass2Hint);
+            pass2Hint.TextAlignment = TextAlignment.Center;
+            pass2Hint.FontSize = 8;
+            pass2Hint.Foreground = Brushes.LightGray;
+            MainStackPanel.Children.Add(createBtn);
+            createBtn.Width = 150;
+            createBtn.Height = 40;
+            createBtn.Margin = new Thickness(0, 30, 0, 0);
+            createBtn.Background = Brushes.RoyalBlue;
+            createBtn.BorderBrush = null;
+            createBtn.Content = "Создать!";
+            createBtn.Foreground = Brushes.White;
+            createBtn.Content = createBtnText;
+            createBtnText.Text = "Создать";
+            createBtnText.FontSize = 15;
+            createBtnText.FontWeight = FontWeights.Bold;
         }
     }
 }
