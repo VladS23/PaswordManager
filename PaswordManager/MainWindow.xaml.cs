@@ -28,10 +28,11 @@ namespace PaswordManager
         public TextBlock pass2Hint = new TextBlock();
         public Button createBtn= new Button();
         public TextBlock createBtnText = new TextBlock();
+        public TextBlock errorText = new TextBlock();
         string passwd1;
         string passwd2;
         //public Te
-        public string password;
+        public static string password;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,36 +41,35 @@ namespace PaswordManager
                 BuildSighUpPage();
             }
             createBtn.Click += CreateNewPassFile;
-            pass1.TextChanged += Pass1TextChange;
-            pass2.TextChanged += Pass2TextChange;
-        }
-
-        private void Pass1TextChange(object sender, TextChangedEventArgs e)
-        {
-            TextBox mytb = (TextBox)sender;
-            if (mytb.Text.Length > 0)
-            {
-                passwd1 += mytb.Text[0];
-                char[] chars = mytb.Text.ToCharArray();
-                chars[0] = '*';
-                mytb.Text = new string(chars);
-            }
-        }
-        private void Pass2TextChange(object sender, TextChangedEventArgs e)
-        {
-            TextBox mytb = (TextBox)sender;
-            if (mytb.Text.Length > 0)
-            {
-                passwd2 += mytb.Text[0];
-                char[] chars = mytb.Text.ToCharArray();
-                chars[0] = '*';
-                mytb.Text = new string(chars);
-            }
         }
 
         private void CreateNewPassFile(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            passwd1=pass1.Text;
+            passwd2=pass2.Text;
+            if (passwd1 == passwd2)
+            {
+                if (passwd1!= null && passwd1.Length >= 8)
+                {
+                    File.Create(Directory.GetCurrentDirectory() + @"/paswd.enc");
+                    password = passwd1;
+                    Passwords paswordsWindow = new Passwords();
+                    paswordsWindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    errorText.Text = "Пароль должен содержать минимум 8 символов";
+                    errorText.Foreground = Brushes.Red;
+                    errorText.TextAlignment = TextAlignment.Center;
+                }
+            }
+            else
+            {
+                errorText.Text = "Пароли не совпадают";
+                errorText.Foreground=Brushes.Red;
+                errorText.TextAlignment = TextAlignment.Center;
+            }
         }
 
         void BuildSighUpPage()
@@ -109,6 +109,7 @@ namespace PaswordManager
             createBtnText.Text = "Создать";
             createBtnText.FontSize = 15;
             createBtnText.FontWeight = FontWeights.Bold;
+            MainStackPanel.Children.Add(errorText);
         }
     }
 }
