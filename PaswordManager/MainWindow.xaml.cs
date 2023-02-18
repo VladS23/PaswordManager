@@ -33,11 +33,11 @@ namespace PaswordManager
         public TextBlock errorText = new TextBlock();
         string passwd1;
         string passwd2;
-        //public Te
         public static string password;
         public MainWindow()
         {
             InitializeComponent();
+            Cryptor.PasswordToHash("gfhjkm");
             if (!File.Exists(Directory.GetCurrentDirectory() + @"/paswd.enc"))
             {
                 BuildSighUpPage();
@@ -47,7 +47,24 @@ namespace PaswordManager
                 BuildLogInPage();
             }
             SightUpBtn.Click += CreateNewPassFile;
-            LogInBtn.Click += CreateNewPassFile;
+            LogInBtn.Click += LogInPressed;
+        }
+
+        private void LogInPressed(object sender, RoutedEventArgs e)
+        {
+            if (passwd1 == "123456789")
+            {
+                password = passwd1;
+                Passwords paswordsWindow = new Passwords();
+                paswordsWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                errorText.Text = "Неверный пароль";
+                errorText.Foreground = Brushes.Red;
+                errorText.TextAlignment = TextAlignment.Center;
+            }
         }
 
         private void BuildLogInPage()
