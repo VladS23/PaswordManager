@@ -47,6 +47,7 @@ namespace PaswordManager
                 BuildLogInPage();
             }
             SightUpBtn.Click += CreateNewPassFile;
+            LogInBtn.Click += CreateNewPassFile;
         }
 
         private void BuildLogInPage()
@@ -90,12 +91,22 @@ namespace PaswordManager
                 {
                     if (!passwd1.Contains(" "))
                     {
-                        File.Create(Directory.GetCurrentDirectory() + @"/paswd.enc");
-                        password = passwd1;
-                        Passwords paswordsWindow = new Passwords();
-                        paswordsWindow.Show();
-                        this.Close();
+                        if (!passwd1.Contains(";"))
+                        {
+                            File.Create(Directory.GetCurrentDirectory() + @"/paswd.enc");
+                            password = passwd1;
+                            Passwords paswordsWindow = new Passwords();
+                            paswordsWindow.Show();
+                            this.Close();
+                        }
+                        else
+                        {
+                            errorText.Text = "Пароль не должен точку с запятой";
+                            errorText.Foreground = Brushes.Red;
+                            errorText.TextAlignment = TextAlignment.Center;
+                        }
                     }
+                    else
                     {
                         errorText.Text = "Пароль не должен содержать пробелы";
                         errorText.Foreground = Brushes.Red;
