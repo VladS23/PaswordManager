@@ -28,6 +28,10 @@ namespace PaswordManager
         public TextBlock pass2Hint = new TextBlock();
         public Button createBtn= new Button();
         public TextBlock createBtnText = new TextBlock();
+        string passwd1;
+        string passwd2;
+        //public Te
+        public string password;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,7 +39,39 @@ namespace PaswordManager
             {
                 BuildSighUpPage();
             }
+            createBtn.Click += CreateNewPassFile;
+            pass1.TextChanged += Pass1TextChange;
+            pass2.TextChanged += Pass2TextChange;
         }
+
+        private void Pass1TextChange(object sender, TextChangedEventArgs e)
+        {
+            TextBox mytb = (TextBox)sender;
+            if (mytb.Text.Length > 0)
+            {
+                passwd1 += mytb.Text[0];
+                char[] chars = mytb.Text.ToCharArray();
+                chars[0] = '*';
+                mytb.Text = new string(chars);
+            }
+        }
+        private void Pass2TextChange(object sender, TextChangedEventArgs e)
+        {
+            TextBox mytb = (TextBox)sender;
+            if (mytb.Text.Length > 0)
+            {
+                passwd2 += mytb.Text[0];
+                char[] chars = mytb.Text.ToCharArray();
+                chars[0] = '*';
+                mytb.Text = new string(chars);
+            }
+        }
+
+        private void CreateNewPassFile(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         void BuildSighUpPage()
         {
             logo.Text = "Password Manager";
