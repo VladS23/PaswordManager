@@ -37,7 +37,12 @@ namespace PaswordManager
         public MainWindow()
         {
             InitializeComponent();
-            Cryptor.PasswordToHash("gfhjkm");
+            byte[] chipertext = Cryptor.Encrypt("text to encrypt", "password");
+            int i = 0;
+            string k = Encoding.Unicode.GetString(chipertext);
+            i = 0;
+            string plaintext = Cryptor.Decrypt(chipertext, "password");
+
             if (!File.Exists(Directory.GetCurrentDirectory() + @"/paswd.enc"))
             {
                 BuildSighUpPage();
