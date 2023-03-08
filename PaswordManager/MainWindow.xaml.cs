@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace PaswordManager
 {
@@ -21,28 +22,22 @@ namespace PaswordManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        public TextBlock logo = new TextBlock();
-        public TextBox pass1 = new TextBox();
-        public TextBlock pass1Hint = new TextBlock();
-        public TextBox pass2 = new TextBox();
-        public TextBlock pass2Hint = new TextBlock();
-        public Button SightUpBtn= new Button();
-        public TextBlock SightUpBtnText = new TextBlock();
-        public Button LogInBtn = new Button();
-        public TextBlock LogInBtnText = new TextBlock();
-        public TextBlock errorText = new TextBlock();
+        public TextBlock logo = new();
+        public TextBox pass1 = new();
+        public TextBlock pass1Hint = new();
+        public TextBox pass2 = new();
+        public TextBlock pass2Hint = new();
+        public Button SightUpBtn= new();
+        public TextBlock SightUpBtnText = new();
+        public Button LogInBtn = new();
+        public TextBlock LogInBtnText = new();
+        public TextBlock errorText = new ();
         string passwd1;
         string passwd2;
         public static string password;
         public MainWindow()
         {
             InitializeComponent();
-            byte[] chipertext = Cryptor.Encrypt("text to encrypt", "password");
-            int i = 0;
-            string k = Encoding.Unicode.GetString(chipertext);
-            i = 0;
-            string plaintext = Cryptor.Decrypt(chipertext, "password");
-
             if (!File.Exists(Directory.GetCurrentDirectory() + @"/paswd.enc"))
             {
                 BuildSighUpPage();
@@ -60,7 +55,7 @@ namespace PaswordManager
             if (passwd1 == "123456789")
             {
                 password = passwd1;
-                Passwords paswordsWindow = new Passwords();
+                Passwords paswordsWindow = new();
                 paswordsWindow.Show();
                 this.Close();
             }
@@ -107,40 +102,28 @@ namespace PaswordManager
         {
             passwd1=pass1.Text;
             passwd2=pass2.Text;
+            String paswordRegexPattern = @"(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*-_+№,.]{8,}";
             if (passwd1 == passwd2)
             {
-                if (passwd1!= null && passwd1.Length >= 8)
-                {
-                    if (!passwd1.Contains(" "))
+                    if (Regex.IsMatch(passwd1, paswordRegexPattern, RegexOptions.IgnoreCase))
                     {
-                        if (!passwd1.Contains(";"))
-                        {
                             File.Create(Directory.GetCurrentDirectory() + @"/paswd.enc");
                             password = passwd1;
-                            Passwords paswordsWindow = new Passwords();
+                            Passwords paswordsWindow = new();
                             paswordsWindow.Show();
                             this.Close();
-                        }
-                        else
-                        {
-                            errorText.Text = "Пароль не должен точку с запятой";
-                            errorText.Foreground = Brushes.Red;
-                            errorText.TextAlignment = TextAlignment.Center;
-                        }
                     }
                     else
                     {
-                        errorText.Text = "Пароль не должен содержать пробелы";
+                        errorText.Text = "Пароль должен содержать хотя бы одну цифру, \n" +
+                        "латинские буквы разных регистров \n" +
+                        "и символ из набора !@#$%^&*-_+№,. \n" +
+                        "И не должен содержать другие символы. \n" +
+                        "Минимальная длинна пароля 8";
                         errorText.Foreground = Brushes.Red;
                         errorText.TextAlignment = TextAlignment.Center;
                     }
-                }
-                else
-                {
-                    errorText.Text = "Пароль должен содержать минимум 8 символов";
-                    errorText.Foreground = Brushes.Red;
-                    errorText.TextAlignment = TextAlignment.Center;
-                }
+  
             }
             else
             {
