@@ -49,7 +49,7 @@ namespace PaswordManager
             firstRow.Children.Add(loginTextBlock);
             firstRow.Children.Add(passwordTextBlock);
             firstRow.Children.Add(commentTextBlock);
-            firstRow.Width = this.Width;
+            firstRow.Width = this.Width-29;
             passwordsListBox.Items.Add(firstRow);
             Grid.SetRow(passwordsListBox, 0);
             mainGrid.Children.Add(passwordsListBox);
