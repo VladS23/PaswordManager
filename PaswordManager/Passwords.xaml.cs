@@ -22,6 +22,18 @@ namespace PaswordManager
         public Passwords()
         {
             InitializeComponent();
+            ListBox passwordsListBox = new();
+            List<Grid> rows = new();
+            Grid firstRow = new();
+            RowDefinition site = new();
+            RowDefinition login = new();
+            RowDefinition password = new();
+            RowDefinition comment = new();
+            firstRow.RowDefinitions.Add(site);
+            firstRow.RowDefinitions.Add(login);
+            firstRow.RowDefinitions.Add(password);
+            firstRow.RowDefinitions.Add(comment);
+
         }
     }
 }

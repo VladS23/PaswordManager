@@ -52,6 +52,7 @@ namespace PaswordManager
 
         private void LogInPressed(object sender, RoutedEventArgs e)
         {
+            passwd1=pass1.Text;
             if (passwd1 == "123456789")
             {
                 password = passwd1;
@@ -69,32 +70,10 @@ namespace PaswordManager
 
         private void BuildLogInPage()
         {
-            logo.Text = "Password Manager";
-            MainStackPanel.Children.Add(logo);
-            logo.TextAlignment = TextAlignment.Center;
-            logo.FontWeight = FontWeights.Bold;
-            logo.FontSize = 50;
-            logo.FontFamily = new FontFamily("Cooper Black");
-            logo.Foreground = Brushes.RoyalBlue;
-            MainStackPanel.Children.Add(pass1);
-            pass1.Margin = new Thickness(0, 30, 0, 0);
-            pass1.Width = 150;
-            pass1Hint.Text = "Введите пароль";
-            MainStackPanel.Children.Add(pass1Hint);
-            pass1Hint.TextAlignment = TextAlignment.Center;
-            pass1Hint.FontSize = 8;
-            pass1Hint.Foreground = Brushes.LightGray;
-            MainStackPanel.Children.Add(LogInBtn);
-            LogInBtn.Width = 150;
-            LogInBtn.Height = 40;
-            LogInBtn.Margin = new Thickness(0, 30, 0, 0);
-            LogInBtn.Background = Brushes.RoyalBlue;
-            LogInBtn.BorderBrush = null;
-            LogInBtn.Foreground = Brushes.White;
-            LogInBtn.Content = LogInBtnText;
-            LogInBtnText.Text = "Войти";
-            LogInBtnText.FontSize = 15;
-            LogInBtnText.FontWeight = FontWeights.Bold;
+            CreateLogo();
+            CreatePass1TextBlock();
+            CreatePasswordHint();
+            CreateLogInButton();
             MainStackPanel.Children.Add(errorText);
         }
 
@@ -102,7 +81,7 @@ namespace PaswordManager
         {
             passwd1=pass1.Text;
             passwd2=pass2.Text;
-            String paswordRegexPattern = @"(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*-_+№,.]{8,}";
+            String paswordRegexPattern = @"(?=.*[0-9])(?=.*[!@#$%^&*_\-+№,.;:])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*_\-+№,.;:]{8,}";
             if (passwd1 == passwd2)
             {
                     if (Regex.IsMatch(passwd1, paswordRegexPattern, RegexOptions.IgnoreCase))
@@ -123,7 +102,6 @@ namespace PaswordManager
                         errorText.Foreground = Brushes.Red;
                         errorText.TextAlignment = TextAlignment.Center;
                     }
-  
             }
             else
             {
@@ -135,6 +113,16 @@ namespace PaswordManager
 
         void BuildSighUpPage()
         {
+            CreateLogo();
+            CreatePass1TextBlock();
+            CreateNewPassHint();
+            CreatePass2TextBlock();
+            CreateRepeatPassHint();
+            CreateSighUpButton();
+            MainStackPanel.Children.Add(errorText);
+        }
+        void CreateLogo()
+        {
             logo.Text = "Password Manager";
             MainStackPanel.Children.Add(logo);
             logo.TextAlignment = TextAlignment.Center;
@@ -142,22 +130,37 @@ namespace PaswordManager
             logo.FontSize = 50;
             logo.FontFamily = new FontFamily("Cooper Black");
             logo.Foreground = Brushes.RoyalBlue;
+        }
+        void CreatePass1TextBlock()
+        {
             MainStackPanel.Children.Add(pass1);
             pass1.Margin = new Thickness(0, 30, 0, 0);
             pass1.Width = 150;
+        }
+        void CreateNewPassHint()
+        {
             pass1Hint.Text = "Придумайте пароль для доступа к паролям";
             MainStackPanel.Children.Add(pass1Hint);
             pass1Hint.TextAlignment = TextAlignment.Center;
             pass1Hint.FontSize = 8;
             pass1Hint.Foreground = Brushes.LightGray;
+        }
+        void CreatePass2TextBlock()
+        {
             MainStackPanel.Children.Add(pass2);
             pass2.Margin = new Thickness(0, 10, 0, 0);
             pass2.Width = 150;
+        }
+        void CreateRepeatPassHint()
+        {
             pass2Hint.Text = "Повторите его";
             MainStackPanel.Children.Add(pass2Hint);
             pass2Hint.TextAlignment = TextAlignment.Center;
             pass2Hint.FontSize = 8;
             pass2Hint.Foreground = Brushes.LightGray;
+        }
+        void CreateSighUpButton()
+        {
             MainStackPanel.Children.Add(SightUpBtn);
             SightUpBtn.Width = 150;
             SightUpBtn.Height = 40;
@@ -169,7 +172,28 @@ namespace PaswordManager
             SightUpBtnText.Text = "Создать";
             SightUpBtnText.FontSize = 15;
             SightUpBtnText.FontWeight = FontWeights.Bold;
-            MainStackPanel.Children.Add(errorText);
+        }
+        void CreatePasswordHint()
+        {
+            pass1Hint.Text = "Введите пароль";
+            MainStackPanel.Children.Add(pass1Hint);
+            pass1Hint.TextAlignment = TextAlignment.Center;
+            pass1Hint.FontSize = 8;
+            pass1Hint.Foreground = Brushes.LightGray;
+        }
+        void CreateLogInButton()
+        {
+            MainStackPanel.Children.Add(LogInBtn);
+            LogInBtn.Width = 150;
+            LogInBtn.Height = 40;
+            LogInBtn.Margin = new Thickness(0, 30, 0, 0);
+            LogInBtn.Background = Brushes.RoyalBlue;
+            LogInBtn.BorderBrush = null;
+            LogInBtn.Foreground = Brushes.White;
+            LogInBtn.Content = LogInBtnText;
+            LogInBtnText.Text = "Войти";
+            LogInBtnText.FontSize = 15;
+            LogInBtnText.FontWeight = FontWeights.Bold;
         }
     }
 }
