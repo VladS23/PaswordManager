@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,7 +34,39 @@ namespace PaswordManager
             AddPasswordWindow nps = new();
             if (nps.ShowDialog() == true)
             {
-                addPasswordRecord(nps.site, nps.login, nps.paswd, nps.comm);
+                if (nps.site != "" || nps.login != "" || nps.paswd != "" || nps.comm != "")
+                {
+                    String paswordRegexPattern = @"^[а-яА-ЯёЁa-zA-Z0-9\.\,\\\-\;\:\#\&\@\$\%\^\+\=_]*$";
+                    if (Regex.IsMatch(nps.site, paswordRegexPattern))
+                    {
+                        if (Regex.IsMatch(nps.login, paswordRegexPattern))
+                        {
+                            if (Regex.IsMatch(nps.paswd, paswordRegexPattern))
+                            {
+                                if (Regex.IsMatch(nps.comm, paswordRegexPattern))
+                                {
+                                    addPasswordRecord(nps.site, nps.login, nps.paswd, nps.comm);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Недопустимые символы в комментарии");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Недопустимые символы в пароле");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Недопустимые символы в логине");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Недопустимые символы в имени сайта");
+                    }
+                }
             }
             nps.Close();
         }
