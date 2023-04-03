@@ -57,7 +57,7 @@ namespace PaswordManager
             if (passwd1 == "123456789")
             {
                 password = passwd1;
-                Passwords paswordsWindow = new();
+                Passwords paswordsWindow = new(false);
                 paswordsWindow.Show();
                 this.Close();
             }
@@ -89,7 +89,7 @@ namespace PaswordManager
                     {
                             File.Create(Directory.GetCurrentDirectory() + @"/paswd.enc");
                             password = passwd1;
-                            Passwords paswordsWindow = new();
+                            Passwords paswordsWindow = new(true);
                             paswordsWindow.Show();
                             this.Close();
                     }

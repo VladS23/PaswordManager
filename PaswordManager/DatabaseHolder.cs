@@ -22,9 +22,15 @@ namespace PaswordManager
             passwordsListBox = new ListBox();
             database = new();
         }
-        public void LoadDb() 
+        public DatabaseHolder LoadDb() 
         {
-            
+            DatabaseHolder newDb;
+            using (StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + @"/paswd.enc"))
+            {
+                string text = reader.ReadToEnd();
+                newDb = JsonSerializer.Deserialize<DatabaseHolder>(text);
+            }
+            return newDb;
         }
         public void SaveDb()
         {
@@ -34,6 +40,10 @@ namespace PaswordManager
                 WriteIndented = true
             };
             string jsonString = JsonSerializer.Serialize(this, options);
+            using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"/paswd.enc", false))
+            {
+                writer.WriteLineAsync(jsonString);
+            }
         }
     }
 }

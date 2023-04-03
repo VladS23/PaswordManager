@@ -21,10 +21,23 @@ namespace PaswordManager
     public partial class Passwords : Window
     {
         public List<Grid> rows = new();
-        public Passwords()
+        public Passwords(bool isNew)
         {
             InitializeComponent();
-            addPasswordRecord("Сайт", "Логин", "Пароль", "Комментарий");
+            if (isNew)
+            {
+                addPasswordRecord("Сайт", "Логин", "Пароль", "Комментарий");
+            }
+            else
+            {
+                DatabaseHolder newDb = MainWindow.dbhold.LoadDb();
+                MainWindow.dbhold.passwordsListBox = new ListBox();
+                MainWindow.dbhold.database = new();
+                for (int i=0; i < newDb.database.Count; i++)
+                {
+                    addPasswordRecord(newDb.database[i][0], newDb.database[i][1], newDb.database[i][2], newDb.database[i][3]);
+                }
+            }
             AddButton.Click += CreateButtonClicked;
             SaveButton.Click += SaveButtonClicked;
         }
