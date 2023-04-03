@@ -22,6 +22,7 @@ namespace PaswordManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static DatabaseHolder dbhold = new();
         public TextBlock logo = new();
         public TextBox pass1 = new();
         public TextBlock pass1Hint = new();

@@ -21,12 +21,17 @@ namespace PaswordManager
     public partial class Passwords : Window
     {
         public List<Grid> rows = new();
-        public ListBox passwordsListBox = new();
         public Passwords()
         {
             InitializeComponent();
             addPasswordRecord("Сайт", "Логин", "Пароль", "Комментарий");
             AddButton.Click += CreateButtonClicked;
+            SaveButton.Click += SaveButtonClicked;
+        }
+
+        private void SaveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow.dbhold.SaveDb();
         }
 
         private void CreateButtonClicked(object sender, RoutedEventArgs e)
@@ -36,7 +41,7 @@ namespace PaswordManager
             {
                 if (nps.site != "" || nps.login != "" || nps.paswd != "" || nps.comm != "")
                 {
-                    String paswordRegexPattern = @"^[а-яА-ЯёЁa-zA-Z0-9\.\,\\\-\;\:\#\&\@\$\%\^\+\=_]*$";
+                    String paswordRegexPattern = @"^[а-яА-ЯёЁa-zA-Z0-9\.\,\\\-\;\:\#\&\@\$\%\^\+\=_/]*$";
                     if (Regex.IsMatch(nps.site, paswordRegexPattern))
                     {
                         if (Regex.IsMatch(nps.login, paswordRegexPattern))
@@ -99,9 +104,10 @@ namespace PaswordManager
             r.Children.Add(passwordTextBlock);
             r.Children.Add(commentTextBlock);
             r.Width = this.Width - 29;
-            passwordsListBox.Items.Add(r);
-            Grid.SetRow(passwordsListBox, 0);
-            UpdateMainGrid(passwordsListBox);
+            MainWindow.dbhold.passwordsListBox.Items.Add(r);
+            MainWindow.dbhold.database.Add(new List<string> { site, log, pasw, comm });
+            Grid.SetRow(MainWindow.dbhold.passwordsListBox, 0);
+            UpdateMainGrid(MainWindow.dbhold.passwordsListBox);
             rows.Add(r);
         }
         public void UpdateMainGrid(ListBox passwordsListBox)
