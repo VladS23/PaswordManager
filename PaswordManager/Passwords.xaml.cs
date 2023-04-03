@@ -30,7 +30,12 @@ namespace PaswordManager
 
         private void CreateButtonClicked(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            AddPasswordWindow nps = new();
+            if (nps.ShowDialog() == true)
+            {
+                addPasswordRecord(nps.site, nps.login, nps.paswd, nps.comm);
+            }
+            nps.Close();
         }
 
         public void addPasswordRecord(string site, string log, string pasw, string comm)
@@ -68,7 +73,7 @@ namespace PaswordManager
         }
         public void UpdateMainGrid(ListBox passwordsListBox)
         {
-            mainGrid.Children.Clear();
+            mainGrid.Children.Remove(passwordsListBox);
             mainGrid.Children.Add(passwordsListBox);
         }
     }

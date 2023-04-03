@@ -19,9 +19,30 @@ namespace PaswordManager
     /// </summary>
     public partial class AddPasswordWindow : Window
     {
+        public string site;
+        public string login;
+        public string paswd;
+        public string comm;
+
         public AddPasswordWindow()
         {
             InitializeComponent();
+            Save.Click += SaveButtonClicked;
+            Close.Click += CloseButtonClicked;
+        }
+
+        private void CloseButtonClicked(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+
+        private void SaveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            site= sitetextBox.Text is null ? " " : sitetextBox.Text;
+            login = logintextBox.Text is null ? " " : logintextBox.Text;
+            paswd = paswdtextBox.Text is null ? " " : paswdtextBox.Text;
+            comm = commtextBox.Text is null ? " " : commtextBox.Text;
+            this.DialogResult = true;
         }
     }
 }
