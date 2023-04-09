@@ -35,7 +35,7 @@ namespace PaswordManager
             newDb = JsonSerializer.Deserialize<DatabaseHolder>(text);
             return newDb;
         }
-        public void SaveDb()
+        public void SaveDb(string password)
         {
             string paswordPath = Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME;
             string ivPath = Directory.GetCurrentDirectory() + "/" + MainWindow.IV_FILE_NAME;
@@ -45,7 +45,7 @@ namespace PaswordManager
                 WriteIndented = true
             };
             string jsonString = JsonSerializer.Serialize(this, options);
-            Cryptor.SaveEncrPaswords(paswordPath, ivPath, "123456789", jsonString);
+            Cryptor.SaveEncrPaswords(paswordPath, ivPath, password, jsonString);
         }
     }
 }

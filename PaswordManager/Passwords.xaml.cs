@@ -50,7 +50,7 @@ namespace PaswordManager
 
         private void SaveButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow.dbhold.SaveDb();
+            MainWindow.dbhold.SaveDb(MainWindow.password);
         }
 
         private void CreateButtonClicked(object sender, RoutedEventArgs e)
