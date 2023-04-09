@@ -68,6 +68,18 @@ namespace PaswordManager
                 errorText.Foreground = Brushes.Red;
                 errorText.TextAlignment = TextAlignment.Center;
             }
+            catch(FileNotFoundException ex)
+            {
+                errorText.Text = "Отсутствует один из парольных файлов";
+                errorText.Foreground = Brushes.Red;
+                errorText.TextAlignment = TextAlignment.Center;
+            }
+            catch (Exception ex)
+            {
+                errorText.Text = "Неизвестная ошибка";
+                errorText.Foreground = Brushes.Red;
+                errorText.TextAlignment = TextAlignment.Center;
+            }
         }
 
         private void BuildLogInPage()
