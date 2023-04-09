@@ -24,20 +24,20 @@ namespace PaswordManager
     {
         public static string PASSWORD_FILE_NAME = "paswd.enc";
         public static string IV_FILE_NAME = "iv.enc";
+        public static string password;
         public static DatabaseHolder dbhold = new();
-        public TextBlock logo = new();
-        public TextBox pass1 = new();
-        public TextBlock pass1Hint = new();
-        public TextBox pass2 = new();
-        public TextBlock pass2Hint = new();
-        public Button SightUpBtn= new();
-        public TextBlock SightUpBtnText = new();
-        public Button LogInBtn = new();
-        public TextBlock LogInBtnText = new();
-        public TextBlock errorText = new ();
+        TextBlock logo = new();
+        TextBox pass1 = new();
+        TextBlock pass1Hint = new();
+        TextBox pass2 = new();
+        TextBlock pass2Hint = new();
+        Button SightUpBtn= new();
+        TextBlock SightUpBtnText = new();
+        Button LogInBtn = new();
+        TextBlock LogInBtnText = new();
+        TextBlock errorText = new ();
         string passwd1;
         string passwd2;
-        public static string password;
         public MainWindow()
         {
             InitializeComponent();
