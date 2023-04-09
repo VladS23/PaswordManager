@@ -25,23 +25,27 @@ namespace PaswordManager
         public DatabaseHolder LoadDb() 
         {
             DatabaseHolder newDb;
-            using (StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME))
+            string paswordPath = Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME;
+            string ivPath = Directory.GetCurrentDirectory() + "/" + MainWindow.IV_FILE_NAME;
+            using (StreamReader reader = new StreamReader(paswordPath))
             {
                 string chipertext = reader.ReadToEnd();
             }
-            string text = Cryptor.LoadEncrPasswords(Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME, Directory.GetCurrentDirectory() + "/" + MainWindow.IV_FILE_NAME, "123456789");
+            string text = Cryptor.LoadEncrPasswords(paswordPath, ivPath, "123456789");
             newDb = JsonSerializer.Deserialize<DatabaseHolder>(text);
             return newDb;
         }
         public void SaveDb()
         {
+            string paswordPath = Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME;
+            string ivPath = Directory.GetCurrentDirectory() + "/" + MainWindow.IV_FILE_NAME;
             var options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
                 WriteIndented = true
             };
             string jsonString = JsonSerializer.Serialize(this, options);
-            Cryptor.SaveEncrPaswords(Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME, Directory.GetCurrentDirectory() + "/" + MainWindow.IV_FILE_NAME, "123456789", jsonString);
+            Cryptor.SaveEncrPaswords(paswordPath, ivPath, "123456789", jsonString);
         }
     }
 }
