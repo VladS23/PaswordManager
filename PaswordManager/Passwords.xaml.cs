@@ -40,6 +40,12 @@ namespace PaswordManager
             }
             AddButton.Click += CreateButtonClicked;
             SaveButton.Click += SaveButtonClicked;
+            ExitButton.Click += ExitButtonClicked;
+        }
+
+        private void ExitButtonClicked(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void SaveButtonClicked(object sender, RoutedEventArgs e)

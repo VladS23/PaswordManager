@@ -22,6 +22,8 @@ namespace PaswordManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static string PASSWORD_FILE_NAME = "paswd.enc";
+        public static string IV_FILE_NAME = "iv.enc";
         public static DatabaseHolder dbhold = new();
         public TextBlock logo = new();
         public TextBox pass1 = new();
@@ -39,7 +41,7 @@ namespace PaswordManager
         public MainWindow()
         {
             InitializeComponent();
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"/paswd.enc"))
+            if (!File.Exists(Directory.GetCurrentDirectory() + "/" + PASSWORD_FILE_NAME))
             {
                 BuildSighUpPage();
             }
@@ -87,7 +89,7 @@ namespace PaswordManager
             {
                     if (Regex.IsMatch(passwd1, paswordRegexPattern, RegexOptions.IgnoreCase))
                     {
-                            File.Create(Directory.GetCurrentDirectory() + @"/paswd.enc");
+                            File.Create(Directory.GetCurrentDirectory() + @"/" + PASSWORD_FILE_NAME);
                             password = passwd1;
                             Passwords paswordsWindow = new(true);
                             paswordsWindow.Show();

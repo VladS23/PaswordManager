@@ -25,11 +25,12 @@ namespace PaswordManager
         public DatabaseHolder LoadDb() 
         {
             DatabaseHolder newDb;
-            using (StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + @"/paswd.enc"))
+            using (StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME))
             {
-                string text = reader.ReadToEnd();
-                newDb = JsonSerializer.Deserialize<DatabaseHolder>(text);
+                string chipertext = reader.ReadToEnd();
             }
+            string text = Cryptor.LoadEncrPasswords(Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME, Directory.GetCurrentDirectory() + "/" + MainWindow.IV_FILE_NAME, "123456789");
+            newDb = JsonSerializer.Deserialize<DatabaseHolder>(text);
             return newDb;
         }
         public void SaveDb()
@@ -40,10 +41,7 @@ namespace PaswordManager
                 WriteIndented = true
             };
             string jsonString = JsonSerializer.Serialize(this, options);
-            using (StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"/paswd.enc", false))
-            {
-                writer.WriteLineAsync(jsonString);
-            }
+            Cryptor.SaveEncrPaswords(Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME, Directory.GetCurrentDirectory() + "/" + MainWindow.IV_FILE_NAME, "123456789", jsonString);
         }
     }
 }
