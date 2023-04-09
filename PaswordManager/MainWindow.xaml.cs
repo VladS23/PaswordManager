@@ -55,15 +55,14 @@ namespace PaswordManager
 
         private void LogInPressed(object sender, RoutedEventArgs e)
         {
-            passwd1=pass1.Text;
-            if (passwd1 == "123456789")
+            password = pass1.Text;
+            try
             {
-                password = passwd1;
-                Passwords paswordsWindow = new(false);
+                Passwords paswordsWindow = new(false, password);
                 paswordsWindow.Show();
                 this.Close();
             }
-            else
+            catch(IncorrectPasswordExeption ex)
             {
                 errorText.Text = "Неверный пароль";
                 errorText.Foreground = Brushes.Red;
@@ -91,7 +90,7 @@ namespace PaswordManager
                     {
                             File.Create(Directory.GetCurrentDirectory() + @"/" + PASSWORD_FILE_NAME);
                             password = passwd1;
-                            Passwords paswordsWindow = new(true);
+                            Passwords paswordsWindow = new(true, password);
                             paswordsWindow.Show();
                             this.Close();
                     }

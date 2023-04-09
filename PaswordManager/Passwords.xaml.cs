@@ -21,7 +21,7 @@ namespace PaswordManager
     public partial class Passwords : Window
     {
         public List<Grid> rows = new();
-        public Passwords(bool isNew)
+        public Passwords(bool isNew, string password)
         {
             InitializeComponent();
             if (isNew)
@@ -30,7 +30,7 @@ namespace PaswordManager
             }
             else
             {
-                DatabaseHolder newDb = MainWindow.dbhold.LoadDb();
+                DatabaseHolder newDb = MainWindow.dbhold.LoadDb(password);
                 MainWindow.dbhold.passwordsListBox = new ListBox();
                 MainWindow.dbhold.database = new();
                 for (int i=0; i < newDb.database.Count; i++)

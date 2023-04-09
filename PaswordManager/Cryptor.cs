@@ -21,8 +21,15 @@ namespace PaswordManager
         {
             byte[] key = GetKey(paswd);
             byte [] iv =File.ReadAllBytes(IVpath);
-            string plaintext = ReadEncrDataFromFile(Paswdpath, GetKey(paswd), iv);
-            return plaintext;
+            try
+            {
+                string plaintext = ReadEncrDataFromFile(Paswdpath, GetKey(paswd), iv);
+                return plaintext;
+            }
+            catch (Exception ex)
+            {
+                throw new IncorrectPasswordExeption();
+            }
         }
         static void WriteEncrDataToFile(string plaintext, byte [] iv, byte [] key, string filePath)
         {

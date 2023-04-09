@@ -22,7 +22,7 @@ namespace PaswordManager
             passwordsListBox = new ListBox();
             database = new();
         }
-        public DatabaseHolder LoadDb() 
+        public DatabaseHolder LoadDb(string password) 
         {
             DatabaseHolder newDb;
             string paswordPath = Directory.GetCurrentDirectory() + "/" + MainWindow.PASSWORD_FILE_NAME;
@@ -31,7 +31,7 @@ namespace PaswordManager
             {
                 string chipertext = reader.ReadToEnd();
             }
-            string text = Cryptor.LoadEncrPasswords(paswordPath, ivPath, "123456789");
+            string text = Cryptor.LoadEncrPasswords(paswordPath, ivPath, password);
             newDb = JsonSerializer.Deserialize<DatabaseHolder>(text);
             return newDb;
         }
